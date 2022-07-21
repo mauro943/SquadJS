@@ -123,7 +123,7 @@ export default class SquadRcon extends Rcon {
 
     for (const line of response.split('\n')) {
       const match = line.match(
-        /ID: ([0-9]+) \| SteamID: ([0-9]{17}) \| Name: (.+) \| Team ID: ([0-9]+) \| Squad ID: ([0-9]+|N\/A)/
+        /ID: ([0-9]+) \| SteamID: ([0-9]{17}) \| Name: (.+) \| Team ID: ([0-9]+) \| Squad ID: ([0-9]+|N\/A) \| Is Leader: (True|False) \| Role: (.+)/
       );
       if (!match) continue;
 
@@ -132,7 +132,9 @@ export default class SquadRcon extends Rcon {
         steamID: match[2],
         name: match[3],
         teamID: match[4],
-        squadID: match[5] !== 'N/A' ? match[5] : null
+        squadID: match[5] !== 'N/A' ? match[5] : null,
+        isLeader: match[6] === 'True',
+        role: match[7]
       });
     }
 
@@ -188,5 +190,9 @@ export default class SquadRcon extends Rcon {
 
   async switchTeam(steamID) {
     await this.execute(`AdminForceTeamChange "${steamID}"`);
+  }
+
+  async disbandSquad(teamID, squadID) {
+    await this.execute(`AdminDisbandSquad ${teamID} ${squadID}`);
   }
 }

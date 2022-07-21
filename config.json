@@ -231,6 +231,15 @@
       "plugin": "TeamRandomizer",
       "enabled": true,
       "command": "randomize"
+    },
+    {
+      "plugin": "AutoSLKitCheck",
+      "enabled": true,
+      "warningMessage": "You must use a squad leader kit",
+      "disbandMessage": "Squad disbanded due to invalid squad leader kit",
+      "frequency": 30,
+      "maxWarnings": 3,
+      "roundStartDelay": 180
     }
   ],
   "logger": {
